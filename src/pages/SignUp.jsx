@@ -1,10 +1,14 @@
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { db } from "../firebase";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
 
 import OAuth from "../components/OAuth";
 
-export default function SignUn() {
+export default function SignUp() {
 
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({
@@ -23,6 +27,31 @@ export default function SignUn() {
         }))
     }
 
+    async function onSubmit(e) {
+        e.preventDefault();
+
+        try {
+            const auth = getAuth();
+            const userCredential = await createUserWithEmailAndPassword(
+                auth, email, password
+            );
+
+            updateProfile(auth.currentUser, {
+                displayName: name
+            });
+
+            const user = userCredential.user;
+            const formDataCopy = {...formData};
+            delete formDataCopy.password;
+            formDataCopy.timestamp = serverTimestamp();
+            await setDoc(doc(db, 'users', user.uid), formDataCopy);
+            //toast.success('Cadastrado com sucesso!');
+            //navigate('/');
+        } catch (error) {
+            toast.error('Algo deu errado!');
+        }
+    }
+
     return (
         <section>
             <h1 className="text-3xl text-center font-bold mt-6">Criar Conta</h1>
@@ -35,7 +64,7 @@ export default function SignUn() {
                     />
                 </div>
                 <div className="w-full md:w-[67%] lg:w-[40%] lg:ml-20">
-                    <form>
+                    <form onSubmit={onSubmit}>
                     <input 
                             type="text" 
                             id="name" 
@@ -57,6 +86,7 @@ export default function SignUn() {
                                 type={showPassword ? "text" : "password"}
                                 id="password"
                                 value={password}
+                                onChange={onChange}
                                 placeholder="Senha"
                                 className="w-full px-4 py-2 text-xl text-gray-700 bg-white border-gray-300 rounded transition ease-in-out"
                             />
@@ -88,7 +118,7 @@ export default function SignUn() {
                             type="submit"
                             className="w-full bg-blue-600 text-white px-7 py-3 text-sm font-medium uppercase rounded shadow-md hover:bg-blue-700 transition duration-150 ease-in-out hover:shadow-lg active:bg-blue-800"
                         >
-                            Entrar
+                            Criar Conta
                         </button>
                         <div className="flex items-center my-4 before:border-t before:flex-1 before:border-gray-300 after:border-t after:flex-1 after:border-gray-300">
                             <p className="text-center font-semibold mx-4">Ou</p>

@@ -1,3 +1,5 @@
+import { getAuth, updateProfile } from "firebase/auth"
+
 export default function Profile() {
     return (
         <div>
