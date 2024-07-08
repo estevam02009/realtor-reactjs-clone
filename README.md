@@ -48,3 +48,43 @@ Este projeto é um site de imobiliária que permite aos usuários procurar por i
    ```bash
    git clone https://github.com/seu-usuario/seu-repositorio.git
    cd seu-repositorio
+
+2. Instale as dependências
+    ```bash
+    npm install
+    # ou
+    yarn install
+
+3. Configure o Firebase
+    . Crie um projeto no Firebase Console
+    . Adicione um aplicativo web ao projeto
+    . Copie as configurações do Firebase para um arquivo `.env` na raiz do projeto
+
+    REACT_APP_FIREBASE_API_KEY=YOUR_API_KEY
+    REACT_APP_FIREBASE_AUTH_DOMAIN=YOUR_AUTH_DOMAIN
+    REACT_APP_FIREBASE_PROJECT_ID=YOUR_PROJECT_ID
+    REACT_APP_FIREBASE_STORAGE_BUCKET=YOUR_STORAGE_BUCKET
+    REACT_APP_FIREBASE_MESSAGING_SENDER_ID=YOUR_MESSAGING_SENDER_ID
+    REACT_APP_FIREBASE_APP_ID=YOUR_APP_ID
+
+4. Inicie o projeto
+    ```bash
+        npm start
+        # ou
+        yarn start
+
+    
+# Uso
+    Depois de iniciar o projeto, você pode acessá-lo em http://localhost:3000. Use a interface para procurar imóveis, visualizar detalhes e entrar em contato com corretores.
+
+# Estrutura de Pastas
+    /
+
+# Contribuição
+    Contribuições são bem-vindas! Se você tiver sugestões de melhorias, por favor, abra uma issue ou envie um pull request.
+
+
+
+
+
+
